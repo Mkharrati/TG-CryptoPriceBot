@@ -21,7 +21,7 @@ def get_currency_list():
 
 def list_of_available_currencies():
     """
-    Return a dictionary of all available currencies (key: symbol of corresponding currency, value: id of corresponding currency)
+    Return a dictionary of all available currencies (key: symbol of corresponding currency like 'BTC', value: id of corresponding currency like 'btc-bitcoin')
     """
     currency_list = get_currency_list()
     currency_dict = {}
@@ -40,6 +40,7 @@ def request_to(url):
 def get_currency_price_by_symbol(symbol = str()):
     """
     Return currency price by symbol
+    api server required to currency id to send information.
     """
     symbol = symbol.upper()
     currency_id = list_of_available_currencies()[symbol]
