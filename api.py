@@ -49,4 +49,20 @@ def get_currency_price_by_symbol(symbol = str()):
     price = response["quotes"]["USD"]["price"]
     # price = int(price)
     return price
-    pass
+
+def USDTIRT_price():
+    """
+    USDTIRT price amount.
+    """
+    USDTIRT = request_to(USDTIRT_url).json()
+    USDTIRT = USDTIRT["lastTradePrice"]
+    USDTIRT = int(USDTIRT)
+    USDTIRT = USDTIRT / 10 # IRR to IRT
+    return USDTIRT
+
+def convert_USDTD_to_IRT(usdt):
+    """
+    change USDT/Dollar to IRT
+    """
+    USDTIRT = USDTIRT_price()
+    return int(usdt * USDTIRT) # separate integer part
