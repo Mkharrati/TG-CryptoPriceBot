@@ -89,4 +89,4 @@ def round_currency_price(price):
     elif 0.000001 < price < 0.00001:
         return round(price, 8)
     else:
-        return round(price, 7)
+        return price

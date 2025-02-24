@@ -18,7 +18,7 @@ def run():
         """
         handler for start command
         """
-        bot.send_message(message.chat.id, "Hello! \n Send Me desired currency symbol to see price :")
+        bot.send_message(message.chat.id, "سلام! \n لطفا برای دریافت قیمت نماد ارز مورد نظر را ارسال کنید :")
 
     @bot.message_handler(content_types=["text"])
     def handle_text(message):
@@ -30,5 +30,4 @@ def run():
             currency_symbol = text
             currency_price = api.get_currency_price_by_symbol(currency_symbol)
             bot.send_message(message.chat.id, currency_price)
-
     bot.polling()
