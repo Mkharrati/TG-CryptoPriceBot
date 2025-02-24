@@ -29,5 +29,11 @@ def run():
         if text in api.list_of_available_currencies():
             currency_symbol = text
             currency_price = api.get_currency_price_by_symbol(currency_symbol)
-            bot.send_message(message.chat.id, currency_price)
+            IRT_currency_price = api.convert_USDTD_to_IRT(currency_price)
+            bot.send_message(message.chat.id, f"""
+نماد : {text}
+قیمت به دلار : {"{:,}".format(currency_price)}
+قیمت به تومان : {"{:,}".format(IRT_currency_price)}
+""")
+
     bot.polling()
