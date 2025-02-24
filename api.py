@@ -37,7 +37,7 @@ def request_to(url):
     """
     return requests.get(url)
 
-def get_currency_price_by_symbol(symbol = str()):
+def get_currency_price_by_symbol(symbol = str(), rounding = True):
     """
     Return currency price by symbol
     api server required to currency id to send information.
@@ -47,8 +47,10 @@ def get_currency_price_by_symbol(symbol = str()):
     response = request_to(f"https://api.coinpaprika.com/v1/tickers/{currency_id}")
     response = response.json()
     price = response["quotes"]["USD"]["price"]
-    # price = int(price)
-    return price
+    if rounding:
+        return round_currency_price(price)
+    else:
+        return price
 
 def USDTIRT_price():
     """
@@ -66,3 +68,25 @@ def convert_USDTD_to_IRT(usdt):
     """
     USDTIRT = USDTIRT_price()
     return int(usdt * USDTIRT) # separate integer part
+
+def round_currency_price(price):
+    """
+    Rounding prices according to their value.
+    
+    Rounding rules:
+    - For prices greater than 50, no decimal precision is needed (using int conversion).
+    - For prices between 1 and 50, round to 2 decimal places.
+    - For prices between 0.00001 and 1, round to 4 decimal places.
+    - For prices between 0.000001 and 0.00001, round to 8 decimal places.
+    - For prices at or below 0.000001, round to 7 decimal places.
+    """
+    if price > 50:
+        return int(price)
+    elif 1 < price < 50:
+        return round(price, 2)
+    elif 0.00001 < price < 1:
+        return round(price, 4)
+    elif 0.000001 < price < 0.00001:
+        return round(price, 8)
+    else:
+        return round(price, 7)
